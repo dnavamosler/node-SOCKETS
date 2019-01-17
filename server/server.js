@@ -28,40 +28,9 @@ const port = process.env.PORT || 3000;
 app.use(express.static(publicPath));
 
 // Inicializar socket
-let io = socketIO(server)
+module.exports.io = socketIO(server)
+require('./sockets/socket.js')
 
-io.on('connection', (client) => {
-    console.log(`se conecto al servidor.`)
-
-
-    // Enviar mensaje al cliente
-
-    client.emit('escucharMensaje',{
-        usuario : 'administrador',
-        message : 'Bienvenido usuario'
-
-    })
-
-    // reportar una desconexion
-    client.on('disconnect' ,() => {
-        console.log(`Un usuario se ha desconectado`)
-    })
-
-    // Escuchar mensaje del cliente
-    client.on('enviarMessage',(message, cb) => {
-        if(message.nombre){
-            cb({
-                resp : `Todo salio bien!`
-            })
-        }
-        else{
-            cb({
-                resp : `TODO SALIO MAL!!!!`
-            })
-        }
-    })
-
-} )
 /*================================== /*
         Servidor Corriendo
 /*================================== */
