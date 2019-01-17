@@ -11,6 +11,39 @@
 <body>
     <h1>Programa de Colas</h1>
 
+
+    <!-- Importar scripts de socket -->
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+
+    // declaracion de socket
+    let socket = io()
+
+    // Revisamos si se realizo una conexion
+      socket.on('connect', () => {
+        console.log(' conectado al servidor ')
+
+        socket.on('disconnect', () => {
+            console.log(`desconectado del servidor`)
+        })
+
+        // Escuchar al servidor
+        socket.on('escucharMessage',(message) => {
+            console.log(message)
+        })
+
+        //  emitir un mensaje al servidor
+        socket.emit('enviarMessage',{
+            nombre : 'usuario',
+            mensaje: 'acabo de conectarme al servidor'
+        },(res) => {
+            console.log(res.resp)
+        })
+
+      })
+
+    </script>
+
 </body>
 
 </html>
